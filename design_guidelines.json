@@ -1,0 +1,181 @@
+{
+  "identity": {
+    "name": "E1",
+    "role": "Anti-AI Designer",
+    "mission": "Create a military-grade, tactical strategic intelligence platform that breaks the 'AI slop' aesthetic.",
+    "principles": [
+      "Fusion over Imitation: Mix Palantir utility with Matrix aesthetics.",
+      "Emotion First: Evoke 'Urgency' and 'Command'.",
+      "Content is King: Data is the hero, not the container.",
+      "Zoom In: High density, focus on details.",
+      "Negative Space: Use it to group functional areas, not just for air.",
+      "Contrast: High contrast for readability (White on Black)."
+    ]
+  },
+  "context": {
+    "type": "DASHBOARD",
+    "goal": "Information clarity, functional beauty, high density.",
+    "aesthetic": "Mission Impossible / Matrix / Palantir / Bloomberg Terminal",
+    "emotional_tone": "Serious, Authoritative, Precision, High-Tech, Urgent",
+    "constraints": [
+      "NO purple colors (#BD00FF) - strictly forbidden.",
+      "NO generic gradients.",
+      "Dark Mode ONLY (Primary).",
+      "Monospace fonts for ALL data.",
+      "Sharp, crispy typography.",
+      "Glassmorphism: Crystal/Optical Clarity (not muddy)."
+    ]
+  },
+  "design_system": {
+    "typography": {
+      "font_family": {
+        "heading": "Rajdhani, sans-serif",
+        "body": "IBM Plex Sans, sans-serif",
+        "mono": "JetBrains Mono, monospace"
+      },
+      "usage": {
+        "headings": "Uppercase, tracking-wide, font-bold. Use for section titles.",
+        "body": "High legibility, technical feel. Use for descriptions.",
+        "mono": "Use for ALL numbers, metrics, IDs, timestamps, and status codes."
+      },
+      "scale": {
+        "h1": "text-4xl font-bold tracking-wider uppercase",
+        "h2": "text-2xl font-semibold tracking-wide uppercase",
+        "h3": "text-xl font-medium tracking-wide uppercase",
+        "body": "text-sm leading-relaxed",
+        "mono_lg": "text-2xl font-mono",
+        "mono_base": "text-sm font-mono",
+        "mono_sm": "text-xs font-mono"
+      }
+    },
+    "colors": {
+      "palette": {
+        "background": {
+          "default": "#050505",
+          "paper": "#0A0A0A",
+          "subtle": "#121212",
+          "overlay": "rgba(5, 5, 5, 0.8)"
+        },
+        "primary": {
+          "cyan": "#00F0FF",
+          "cyan_dim": "rgba(0, 240, 255, 0.1)"
+        },
+        "secondary": {
+          "slate": "#64748B",
+          "slate_dim": "rgba(100, 116, 139, 0.1)"
+        },
+        "functional": {
+          "success": "#00FF41",
+          "warning": "#FFB800",
+          "error": "#FF3B30",
+          "info": "#00F0FF"
+        },
+        "text": {
+          "primary": "#FFFFFF",
+          "secondary": "#94A3B8",
+          "muted": "#475569",
+          "inverse": "#000000"
+        },
+        "border": {
+          "default": "rgba(255, 255, 255, 0.1)",
+          "active": "rgba(0, 240, 255, 0.5)",
+          "subtle": "rgba(255, 255, 255, 0.05)"
+        }
+      },
+      "rules": [
+        "NEVER use purple (#BD00FF).",
+        "Use Cyan (#00F0FF) for primary actions and active states.",
+        "Use Red (#FF3B30) strictly for alerts and critical errors.",
+        "Use Green (#00FF41) for success and stable states.",
+        "Backgrounds must be deep black/grey, never pure white."
+      ]
+    },
+    "layout": {
+      "grid_system": "Bento Grid - Mode B (High Density)",
+      "spacing": {
+        "container_padding": "p-4 md:p-6",
+        "item_gap": "gap-4",
+        "internal_padding": "p-4"
+      },
+      "containers": {
+        "card": "bg-black/40 backdrop-blur-xl border border-white/10",
+        "panel": "bg-black/60 backdrop-blur-2xl border-r border-white/10"
+      },
+      "radius": {
+        "default": "rounded-none",
+        "sm": "rounded-sm",
+        "lg": "rounded-md"
+      }
+    },
+    "visual_enhancers": {
+      "glassmorphism": "backdrop-filter: blur(20px); background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.1);",
+      "borders": "1px solid rgba(255, 255, 255, 0.1). Active state: 1px solid #00F0FF.",
+      "shadows": "0 0 20px rgba(0, 240, 255, 0.1) (Cyan Glow)",
+      "decorations": [
+        "Corner Brackets (SVG) on key containers.",
+        "Scanlines (CSS overlay) for background.",
+        "Grid lines (CSS background pattern) for empty space."
+      ]
+    },
+    "components": {
+      "buttons": {
+        "primary": "bg-cyan-500/10 text-cyan-400 border border-cyan-500/50 hover:bg-cyan-500/20 hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] uppercase tracking-widest font-mono text-xs py-2 px-4 clip-path-polygon",
+        "secondary": "bg-white/5 text-white/70 border border-white/10 hover:bg-white/10 uppercase tracking-widest font-mono text-xs py-2 px-4",
+        "destructive": "bg-red-500/10 text-red-500 border border-red-500/50 hover:bg-red-500/20 uppercase tracking-widest font-mono text-xs py-2 px-4"
+      },
+      "cards": {
+        "base": "bg-black/40 backdrop-blur-md border border-white/10 relative overflow-hidden group",
+        "hover": "hover:border-cyan-500/30 transition-colors duration-300"
+      },
+      "inputs": {
+        "base": "bg-black/50 border-b border-white/20 focus:border-cyan-500 text-white font-mono placeholder:text-white/20 rounded-none px-0 py-2 transition-colors"
+      }
+    },
+    "motion": {
+      "transitions": "transition-all duration-200 ease-out",
+      "animations": {
+        "fade_in": "animate-in fade-in duration-500",
+        "slide_up": "animate-in slide-in-from-bottom-4 duration-500",
+        "pulse_slow": "animate-pulse duration-[3000ms]"
+      }
+    }
+  },
+  "assets": {
+    "icons": {
+      "library": "lucide-react",
+      "style": "Stroke width 1.5px or 1px. Sharp, technical look.",
+      "mapping": {
+        "dashboard": "LayoutDashboard",
+        "robotics": "Bot",
+        "network": "Network",
+        "blockchain": "Blocks",
+        "strategy": "Swords",
+        "physics": "Atom",
+        "timeline": "Clock",
+        "command": "Terminal"
+      }
+    },
+    "images": {
+      "server_room": "https://images.unsplash.com/photo-1630831506636-5209d7349db9?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "network_nodes": "https://images.unsplash.com/photo-1664526937033-fe2c11f1be25?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "robotics_arm": "https://images.unsplash.com/photo-1720036236694-d0a231c52563?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "cyber_city": "https://images.unsplash.com/photo-1599923142561-ee85cfb5550d?crop=entropy&cs=srgb&fm=jpg&q=85"
+    }
+  },
+  "instructions_to_main_agent": [
+    "1. PURGE PURPLE: Search for '#BD00FF', 'purple', 'violet', 'fuchsia' in all CSS/Tailwind config and REPLACE with transparent, slate, or cyan variants. NO PURPLE ALLOWED.",
+    "2. UPDATE FONTS: Install/Import 'IBM Plex Sans' and replace 'Inter'. Ensure 'JetBrains Mono' is used for all data points.",
+    "3. FLATTEN UI: Remove rounded corners (use rounded-none or rounded-sm). Add 1px borders to everything.",
+    "4. INCREASE DENSITY: Reduce padding in cards, increase information density. Use grid layouts effectively.",
+    "5. ADD DECORATIONS: Implement 'corner brackets' (absolute positioned divs) on cards to give that HUD look.",
+    "6. UPDATE COMPONENTS: Customize Shadcn components to match the 'Crystal Glass' and 'Terminal' aesthetic.",
+    "7. DATA-TESTID: Ensure all interactive elements have data-testid attributes."
+  ],
+  "universal_guidelines": [
+    "Avoid 'AI slop' aesthetic (generic gradients, centered layouts).",
+    "Use z-index hierarchy for depth.",
+    "Micro-animations for every interaction.",
+    "Use 2-3x more spacing in containers, but tight spacing in data grids.",
+    "Subtle grain/noise textures are encouraged."
+  ]
+}
