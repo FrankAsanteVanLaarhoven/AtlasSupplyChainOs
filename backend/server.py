@@ -14,7 +14,7 @@ import random
 import json
 
 ROOT_DIR = Path(__file__).parent
-load_dotenv(ROOT_DIR / '.env')
+load_dotenv(ROOT_DIR / '.env', override=True)
 
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
@@ -22,9 +22,8 @@ client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
 # LLM Integration
-from emergentintegrations.llm.chat import LlmChat, UserMessage
-
-EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
+from openai import AsyncOpenAI
+OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
 
 # Create the main app
 app = FastAPI(title="ATLAS Supply Chain OS")
@@ -33,6 +32,16 @@ api_router = APIRouter(prefix="/api")
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+# Initialize Open Router client
+client_llm = None
+if OPENROUTER_API_KEY:
+    client_llm = AsyncOpenAI(
+        base_url="https://openrouter.ai/api/v1",
+        api_key=OPENROUTER_API_KEY,
+    )
+else:
+    logger.warning("OPENROUTER_API_KEY not found. LLM features will be disabled.")
 
 # ===================== MODELS =====================
 
@@ -182,6 +191,9 @@ QUANTUM_OPTIMIZATIONS = [
 async def process_command_with_llm(command: str, session_id: str) -> Dict[str, Any]:
     """Process user command with LLM and determine intent + UI components"""
     
+    if not client_llm:
+        return analyze_command_fallback(command, "Mock LLM (OpenRouter key missing): " + command)
+    
     system_message = """You are ATLAS, the orchestrator of a next-generation autonomous supply chain platform. 
 Your role is to understand user intent and respond with both conversational text AND UI component instructions.
 
@@ -229,14 +241,15 @@ Always be concise, data-driven, and proactive. You are ATLAS - the brain of this
 Format your response as JSON with keys: response, components (array), primary_agent, intent"""
 
     try:
-        chat = LlmChat(
-            api_key=EMERGENT_LLM_KEY,
-            session_id=session_id,
-            system_message=system_message
-        ).with_model("openai", "gpt-5.2")
+        completion = await client_llm.chat.completions.create(
+            model="openai/gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": system_message},
+                {"role": "user", "content": f"User command: {command}\n\nRespond with JSON format."}
+            ]
+        )
         
-        user_message = UserMessage(text=f"User command: {command}\n\nRespond with JSON format.")
-        response = await chat.send_message(user_message)
+        response = completion.choices[0].message.content
         
         # Parse LLM response
         try:
@@ -437,12 +450,10 @@ async def process_command(request: CommandRequest):
     session_id = request.session_id or str(uuid.uuid4())
     
     # Store command in history
-    await db.command_history.insert_one({
-        "id": str(uuid.uuid4()),
-        "command": request.command,
-        "session_id": session_id,
-        "timestamp": datetime.now(timezone.utc).isoformat()
-    })
+    try:
+        await db.command_history.insert_one({"id": str(uuid.uuid4()), "command": request.command, "session_id": session_id, "timestamp": datetime.now(timezone.utc).isoformat()})
+    except Exception as e:
+        logger.warning(f"Failed to save command history: {e}")
     
     # QUICK COMMAND SHORTCUTS - Skip LLM for exact matches
     command_lower = request.command.lower().strip()
